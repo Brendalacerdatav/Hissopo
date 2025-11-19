@@ -32,32 +32,32 @@ Broker: Mosquitto (executando localmente)
 Clientes MQTT: MQTT Explorer, Node-RED, entre outros.
 
 🧩 3. Estrutura do Repositório
-hissopo-iot/
-│
-├── README.md
-├── /codigo/
-│   ├── hissopo.ino
-│   ├── bibliotecas.txt
-│   └── credenciais-exemplo.h
-│
-├── /hardware/
-│   ├── esquema_fritzing.fzz
-│   ├── esquema_fritzing.png
-│   ├── lista_componentes.md
-│   └── fotos_montagem/
-│
-├── /documentacao/
-│   ├── artigo_final.pdf
-│   ├── fluxograma.png
-│   ├── topicos_mqtt.png
-│   ├── diagramas/
-│   └── resultados/
-│
-├── /testes/
-│   ├── tempos_resposta.csv
-│   ├── graficos/
-│   └── metodologia_testes.md
-│
+hissopo/
+
+── README.md
+── /codigo/
+   ├── hissopo.ino
+   ├── bibliotecas.txt
+   └── credenciais-exemplo.h
+
+── /hardware/
+   ├── esquema_fritzing.fzz
+   ├── esquema_fritzing.png
+   ├── lista_componentes.md
+   └── fotos_montagem/
+
+── /documentacao/
+   ├── artigo_final.pdf
+   ├── fluxograma.png
+   ├── topicos_mqtt.png
+   ├── diagramas/
+   └── resultados/
+
+── /testes/
+  ├── tempos_resposta.csv
+  ├── graficos/
+  └── metodologia_testes.md
+
 └── /video/
     └── link-video.txt
 
@@ -214,4 +214,4 @@ A versão final do artigo está em:
 Projeto desenvolvido por:
 
 Brenda Ribeiro Lacerda Tavares
-Universidade Presbiteriana Mackenzie – ADS – Internet das Coisas
+Universidade Presbiteriana Mackenzie – ADS – Objetos Inteligentes Conectados
