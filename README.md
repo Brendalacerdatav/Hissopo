@@ -1,217 +1,368 @@
-🧪 Projeto Hissopo – Monitoramento Ambiental IoT
+🧪 Projeto Hissopo – Sistema de Monitoramento Ambiental via IoT
+Monitoramento de temperatura, umidade e qualidade do ar com ESP32, DHT22, MQ-135, LCD I2C e protocolo MQTT
 
-Sistema de monitoramento ambiental baseado em ESP32, utilizando os sensores DHT22 (temperatura e umidade) e MQ-135 (qualidade do ar), com comunicação via protocolo MQTT (Mosquitto).
-O projeto permite visualizar os valores em tempo real e acionar atuadores (LED vermelho e buzzer) remotamente via clientes MQTT.
+📘 1. Descrição Geral do Projeto
+O Hissopo é um sistema de monitoramento ambiental baseado em Internet das Coisas (IoT) capaz de medir temperatura, umidade e presença de gases tóxicos em ambientes internos.
+O nome Hissopo foi escolhido por remeter simbolicamente à ideia de purificação, relacionando-se à proposta do projeto: detectar e alertar sobre potenciais riscos à qualidade do ar.
+O protótipo utiliza o microcontrolador ESP32 conectado via Wi-Fi, publicando dados para um broker MQTT (Mosquitto). O sistema também conta com atuadores que emitem alertas imediatos:
 
-📌 1. Objetivo
 
-Desenvolver um protótipo IoT de baixo custo capaz de monitorar temperatura, umidade e concentração de gases, transmitindo os dados para um broker MQTT e acionando alertas visuais e sonoros automaticamente ou por comandos remotos.
+LED vermelho — alerta visual
 
-🧱 2. Arquitetura Geral do Sistema
 
-Microcontrolador: ESP32 DOIT DevKit V1
+Buzzer ativo — alerta sonoro
 
-Sensores:
 
-DHT22 — temperatura e umidade
+O projeto foi desenvolvido no contexto acadêmico, contribuindo diretamente para o ODS 3 – Saúde e Bem-Estar, ao fornecer um meio acessível de monitoramento da qualidade do ar.
 
-MQ-135 — detecção de gases (qualidade do ar)
+📘 2. Funcionamento e Uso (para quem quiser reproduzir)
+🏗 Como o sistema funciona
 
-Atuadores:
 
-LED vermelho (alerta visual)
+O ESP32 lê:
 
-Buzzer ativo (alerta sonoro)
 
-Display: LCD 16x2 I2C
+temperatura e umidade (DHT22)
 
-Comunicação: Wi-Fi + MQTT
 
-Broker: Mosquitto (executando localmente)
+nível de gases (MQ-135)
 
-Clientes MQTT: MQTT Explorer, Node-RED, entre outros.
 
-🧩 3. Estrutura do Repositório
-hissopo/
 
-── README.md
-── /codigo/
-   ├── hissopo.ino
-   ├── bibliotecas.txt
-   └── credenciais-exemplo.h
 
-── /hardware/
-   ├── esquema_fritzing.fzz
-   ├── esquema_fritzing.png
-   ├── lista_componentes.md
-   └── fotos_montagem/
+Os dados são exibidos no display LCD I2C.
 
-── /documentacao/
-   ├── artigo_final.pdf
-   ├── fluxograma.png
-   ├── topicos_mqtt.png
-   ├── diagramas/
-   └── resultados/
 
-── /testes/
-  ├── tempos_resposta.csv
-  ├── graficos/
-  └── metodologia_testes.md
+O ESP32 conecta-se ao Wi-Fi e envia os dados ao Mosquitto MQTT instalado em um computador.
 
-└── /video/
-    └── link-video.txt
 
-🔌 4. Lista de Componentes
+Qualquer cliente MQTT pode visualizar:
 
-- ESP32 DOIT DevKit V1
-
-- Sensor DHT22
-
-- Sensor MQ-135
-
-- Display LCD 16x2 I2C
-
-- LED vermelho
-
-- Buzzer ativo
-
-- Resistor 220 Ω
-
-- Divisor de tensão (10 kΩ + 20 kΩ)
-
-- Protoboard
-
-- Jumpers
-
-- Cabo USB
-
-🛠 5. Instalação das Bibliotecas
-
-As bibliotecas utilizadas estão listadas no arquivo /codigo/bibliotecas.txt.
-
-Instale via Arduino IDE → Sketch → Incluir Biblioteca → Gerenciar Bibliotecas:
-
-DHT sensor library
-
-Adafruit Unified Sensor
-
-LiquidCrystal_I2C
-
-PubSubClient
-
-Wire
-
-WiFi
-
-📡 6. Configuração do Mosquitto (Broker MQTT)
-Instalação (Windows/Linux/macOS)
-
-https://mosquitto.org/download/
-
-Iniciar o broker
-mosquitto
-
-Teste simples
-
-Em dois terminais:
-
-Terminal 1 – assinando dados
-
-mosquitto_sub -t hissopo/# 
-
-
-Terminal 2 – publicando
-
-mosquitto_pub -t hissopo/teste -m "ola"
-
-🔧 7. Configuração do Código
-
-Crie o arquivo /codigo/credenciais.h baseado em credenciais-exemplo.h:
-
-#define WIFI_SSID "SEU_WIFI"
-#define WIFI_PASSWORD "SUA_SENHA"
-#define MQTT_SERVER "192.168.0.10"  // IP do computador com Mosquitto
-#define MQTT_PORT 1883
-
-
-Importante:
-❌ Não suba suas credenciais reais no GitHub.
-
-📤 8. Como carregar o código no ESP32
-
-Abra o arquivo hissopo.ino
-
-Conecte o ESP32 via USB
-
-Vá em:
-Ferramentas → Placa → ESP32 Dev Module
-
-Clique em Upload
-
-🛰 9. Tópicos MQTT utilizados
-
-O ESP32 usa os seguintes tópicos:
-
-📥 Publicações (do ESP32 → broker)
 
 hissopo/sensor/temperatura
 
+
 hissopo/sensor/umidade
+
 
 hissopo/sensor/gas
 
-📤 Assinaturas (brokers/cliente → ESP32)
+
+
+
+O usuário também pode enviar comandos para:
+
+
+hissopo/atuador/led/set → ON/OFF
+
+
+hissopo/atuador/buzzer/set → ON/OFF
+
+
+
+
+Se as leituras ultrapassam limites seguros, o sistema aciona automaticamente:
+
+
+LED
+
+
+Buzzer
+
+
+Mensagens são enviadas ao MQTT
+
+
+
+
+▶️ Como rodar o projeto
+
+
+Instale o Arduino IDE
+
+
+Instale as bibliotecas do arquivo /codigo/bibliotecas.txt
+
+
+Edite o arquivo credenciais-exemplo.h com o SSID/senha do Wi-Fi
+
+
+Suba o código hissopo.ino para o ESP32
+
+
+Instale o Mosquitto e rode o broker
+
+
+Use MQTT Explorer para observar os dados e controlar o sistema
+
+
+
+📘 3. Software Desenvolvido e Documentação de Código
+O código-fonte completo está no diretório:
+/codigo/hissopo.ino
+
+A documentação de funções e módulos inclui:
+
+
+setup() – inicialização de hardware, rede e MQTT
+
+
+loop() – leitura de sensores, publicação de dados e exibição no LCD
+
+
+callback() – recebe comandos para LED e buzzer
+
+
+reconnect() – reconexão automática ao broker MQTT
+
+
+Além disso, o diretório contém:
+
+
+bibliotecas.txt — lista das bibliotecas usadas
+
+
+credenciais-exemplo.h — modelo para suas credenciais
+
+
+
+📘 4. Hardware Utilizado
+🔌 Componentes Eletrônicos
+
+
+ESP32 DOIT Devkit V1 (ESP-WROOM-32)
+
+
+Sensor DHT22 (temperatura e umidade)
+
+
+Sensor MQ-135 (qualidade do ar)
+
+
+Display LCD 16x2 com I2C (PCF8574)
+
+
+LED vermelho
+
+
+Resistor 220 Ω para o LED
+
+
+Buzzer Ativo
+
+
+Protoboard
+
+
+Jumpers (macho-macho, fêmea-macho, fêmea-fêmea)
+
+
+Resistores: 10kΩ e 22kΩ (divisor de tensão para saída A0 do MQ-135)
+
+
+Cabo USB para alimentar o ESP32
+
+
+📐 Ligações e Diagrama
+O diagrama completo encontra-se em:
+/diagramas/
+
+Incluindo:
+
+
+Diagrama do hardware (Fritzing)
+
+
+Fluxograma do funcionamento
+
+
+Arquitetura da comunicação MQTT
+
+
+Layout do protótipo montado
+
+
+
+📘 5. Documentação das Interfaces, Protocolos e Comunicação
+🌐 Interface TCP/IP
+O ESP32 se conecta a uma rede Wi-Fi utilizando o protocolo TCP/IP para se comunicar com o broker MQTT.
+📡 Protocolo MQTT
+O projeto adota o protocolo MQTT, pela sua leveza e eficiência, ideal para IoT.
+O ESP32:
+Publica
+
+
+hissopo/sensor/temperatura
+
+
+hissopo/sensor/umidade
+
+
+hissopo/sensor/gas
+
+
+Assina
+
 
 hissopo/atuador/led/set
 
+
 hissopo/atuador/buzzer/set
 
-⭐ 10. Como testar com MQTT Explorer
 
-Instale: https://mqtt-explorer.com
-
-Conecte ao endereço do seu Mosquitto
-
-Observe os tópicos sendo atualizados em tempo real
-
-Envie comandos:
-
-LED:
-
-hissopo/atuador/led/set → "ON"
+Ao receber mensagens:
 
 
-Buzzer:
+"ON" → ativa o atuador
 
-hissopo/atuador/buzzer/set → "OFF"
 
-📊 11. Resultados e Testes
+"OFF" → desliga o LED ou o buzzer
 
-Os testes de:
+Isso transforma o projeto em um sistema bidirecional, permitindo:
 
-tempo de resposta de sensores
+Monitoramento remoto
 
-tempo de acionamento dos atuadores
+Controle remoto de atuadores
 
-latência MQTT
+Reação automática a eventos críticos
 
-estão documentados em /testes/ com tabelas, gráficos e metodologia.
+📘 6. Resultados Obtidos
 
-🎥 12. Vídeo de Demonstração
+Durante os testes, o sistema apresentou funcionamento estável, permitindo monitoramento contínuo e envio de alertas automáticos.
 
-O link para o vídeo não listado no YouTube está no arquivo:
+Foram realizados testes com:
 
-/video/link-video.txt
+Fósforo/isqueiro → aumento abrupto no MQ-135
 
-📚 13. Artigo Científico
+Vela acesa → aumento gradual de temperatura
 
-A versão final do artigo está em:
+Umidificador → alteração de umidade
 
-/documentacao/artigo_final.pdf
+Os atuadores responderam corretamente aos limites configurados.
 
-👤 14. Autoria
+📊 Tabela de Testes (valores fictícios – substitua pelos reais)
+Nº Medição	Sensor/Ação	Tempo de Resposta (ms)
+1	MQ-135 → MQTT	820 ms
+2	MQ-135 → MQTT	910 ms
+3	MQ-135 → MQTT	870 ms
+4	MQ-135 → MQTT	890 ms
+Média		872 ms
+Nº Medição	Atuador (LED/Buzzer)	Tempo de Ação (ms)
+1	LED ligado por MQTT	110 ms
+2	LED ligado por MQTT	120 ms
+3	Buzzer ON por MQTT	105 ms
+4	Buzzer ON por MQTT	98 ms
+Média		108 ms
 
-Projeto desenvolvido por:
+Os gráficos correspondentes estão na pasta:
 
-Brenda Ribeiro Lacerda Tavares
-Universidade Presbiteriana Mackenzie – ADS – Objetos Inteligentes Conectados
+/resultados/
+
+🎥 7. Vídeo-Demonstração
+
+O vídeo apresentará:
+
+Identificação da autora
+
+Contexto do problema
+
+Demonstração do protótipo
+
+Testes com vela e fósforo
+
+Funcionamento MQTT
+
+Time-lapse da montagem
+
+🔗 Link do vídeo (YouTube – não listado):
+(insira aqui)
+
+🗂 8. Repositório no GitHub
+
+O repositório contém:
+
+📁 /codigo
+— Código completo hissopo.ino
+— bibliotecas.txt com todas as dependências
+— credenciais-exemplo.h para configuração
+
+📁 /hardware
+— Lista de componentes
+— Esquema elétrico (Fritzing)
+— Fotos da montagem
+
+📁 /diagramas
+— Diagrama MQTT
+— Fluxograma do sistema
+— Arquitetura geral
+
+📁 /resultados
+— Gráficos
+— Capturas de tela do MQTT Explorer
+— Tabela de testes
+
+🔗 Link do repositório GitHub:
+(insira aqui)
+
+🧾 9. Conclusão
+
+O Projeto Hissopo atinge completamente os objetivos propostos: realizar o monitoramento ambiental em tempo real, emitir alertas automáticos e integrar comunicação IoT via MQTT.
+
+✔ Objetivos alcançados
+
+Medição confiável de temperatura, umidade e gases
+
+Exibição local (LCD) e remota (MQTT)
+
+Comunicação bidirecional
+
+Acionamento automático de atuadores
+
+Baixa latência na transmissão de dados
+
+✔ Dificuldades e soluções
+
+O projeto começou com Blynk, mas foi necessário substituir pelo MQTT → resolvido com Mosquitto.
+
+Faltavam jumpers e resistores → ajustes improvisados e compra de novos componentes.
+
+A protoboard pequena dificultou a montagem → reestruturação do layout.
+
+Ruídos no MQ-135 → aplicação de divisor de tensão correto.
+
+LCD não exibia dados → ajuste do contraste e correção de endereço I2C.
+
+✔ Vantagens
+
+Baixo custo
+
+Fácil reprodução
+
+Alta compatibilidade com IoT
+
+MQTT leve e confiável
+
+Projeto modular e expansível
+
+✔ Desvantagens
+
+MQ-135 requer tempo de pré-aquecimento
+
+Sensibilidade a interferências
+
+Dependência da rede Wi-Fi
+
+✔ Melhorias futuras
+
+Dashboard web em Node-RED
+
+Armazenamento histórico em banco de dados
+
+Caixa impressa em 3D
+
+Suporte a vários ambientes simultâneos
+
+Integração com nuvem (AWS IoT / Azure / Google IoT)
+
+📚 10. Referências
+
