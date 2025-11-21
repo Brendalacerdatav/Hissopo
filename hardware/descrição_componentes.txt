@@ -1,0 +1,200 @@
+Descrição do Hardware 
+
+O sistema é composto por um conjunto de componentes eletrônicos que trabalham em integração para permitir a leitura de variáveis ambientais, exibição local das informações e comunicação IoT via protocolo MQTT. A seguir são descritos todos os elementos utilizados no protótipo:
+
+ESP32 DevKit V1 (ESP-WROOM-32)
+
+Microcontrolador que atua como núcleo do sistema, responsável por:
+
+Conectar-se à rede Wi-Fi
+
+Enviar e receber mensagens MQTT
+
+Ler sensores DHT22 e MQ-135
+
+Controlar o display LCD
+
+Acionar LED e buzzer
+
+Processar os dados e executar lógica de alerta
+
+Características relevantes:
+
+CPU Dual Core 240 MHz
+
+Wi-Fi 2.4 GHz
+
+ADC de 12 bits para leitura analógica
+
+Alimentação via USB (5 V) ou pino 3V3
+
+GPIOs multifuncionais
+
+DHT22 — Sensor de Temperatura e Umidade
+
+Sensor digital de alta precisão utilizado para monitorar:
+
+Temperatura ambiente (±0,5°C)
+
+Umidade relativa (±2–5%)
+
+Conexão:
+
+VCC → 3V3
+
+GND → GND
+
+DATA → GPIO 4 (com resistor interno já incluso no módulo)
+
+MQ-135 — Sensor de Gases
+
+Sensor usado para avaliar a qualidade do ar e detectar presença de gases nocivos como:
+
+CO₂
+
+NH₃
+
+Benzeno
+
+Fumaça orgânica
+
+Vapores químicos
+
+Saídas usadas no projeto:
+
+AO (analógica): Conectada ao GPIO 34 via divisor de tensão (22k + 10k)
+
+DO (digital): Não utilizada, mas disponível para detecção com limiar ajustável
+
+Observação:
+O MQ-135 requer tempo de pré-aquecimento (~30–60s) para leituras estáveis.
+
+LCD 16x2 com módulo I²C (PCF8574)
+
+Display utilizado para exibir localmente:
+
+Temperatura
+
+Umidade
+
+Leitura de gás
+
+Status da conexão Wi-Fi
+
+Alertas do sistema
+
+Vantagens do módulo I²C:
+
+Usa apenas dois fios (SDA/SCL)
+
+Ocupa poucos pinos do ESP32
+
+Facilita expansão do circuito
+
+Conexões:
+
+SDA → GPIO 21
+
+SCL → GPIO 22
+
+VCC → 5V
+
+GND → GND
+
+LED Vermelho
+
+Atuador visual acionado automaticamente quando:
+
+Gás ultrapassa valor crítico
+
+Temperatura acima do limite
+
+Comando remoto via MQTT é enviado
+
+Conexão:
+
+Anodo → GPIO 25 (via resistor 220 Ω)
+
+Catodo → GND
+
+Buzzer Ativo
+
+Atuador sonoro utilizado para alertas imediatos. Ele é acionado quando:
+
+A concentração de gás é perigosa
+
+A temperatura excede valor seguro
+
+Comando remoto MQTT solicita ativação
+
+Conexão:
+
+Pino positivo → GPIO 26
+
+Negativo → GND
+
+Resistores
+
+Para garantir segurança e funcionamento correto:
+
+Resistor 220 Ω
+
+Utilizado no LED para limitar a corrente
+
+Evita queimar a GPIO ou o próprio LED
+
+Resistores 22 kΩ + 10 kΩ (Divisor de Tensão do MQ-135)
+
+A saída AO pode passar de 4,5V, enquanto o ESP32 aceita no máximo 3,3V no ADC.
+
+O divisor reduz a tensão para que o sensor possa ser lido com segurança, evitando danos ao microcontrolador.
+
+Protoboard
+
+Base de montagem que permite:
+
+Fixar os componentes sem solda
+
+Ajustar conexões com facilidade
+
+Realizar testes rápidos
+
+Organizar o circuito de forma limpa e modular
+
+Jumpers Macho–Macho e Macho–Fêmea
+
+Utilizados para:
+
+Conectar sensores ao ESP32 mesmo quando ele não cabe totalmente na protoboard
+
+Realizar pontes entre linhas de alimentação
+
+Ajustar posições conforme o espaço limitado da placa
+
+Cabo Micro USB
+
+Com Dupla Função:
+
+Alimentar o ESP32 com 5 V
+
+Enviar o código compilado da Arduino IDE para o microcontrolador
+
+Computador com Broker Mosquitto instalado
+
+Componente essencial da comunicação IoT:
+
+Atua como servidor MQTT local
+
+Recebe as leituras enviadas pelo ESP32 com MQTT 
+
+Ferramentas Complementares
+
+Embora não façam parte do hardware físico, foram essenciais:
+
+MQTT Explorer (cliente MQTT)
+
+Arduino IDE (programação)
+
+Fritzing (diagramas elétricos)
+
+Multímetro (opcional, para testes)
