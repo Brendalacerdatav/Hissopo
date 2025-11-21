@@ -274,14 +274,13 @@ Funcionamento MQTT
 
 Time-lapse da montagem
 
-🔗 Link do vídeo (YouTube – não listado):
-(insira aqui)
+🔗 https://www.youtube.com/watch?v=_zuw_gWDAII
 
 🗂 8. Repositório no GitHub
 
 O repositório contém:
 
-📁 /codigo
+📁 /software
 — Código completo hissopo.ino
 — bibliotecas.txt com todas as dependências
 — credenciais-exemplo.h para configuração
@@ -290,19 +289,22 @@ O repositório contém:
 — Lista de componentes
 — Esquema elétrico (Fritzing)
 — Fotos da montagem
+- Descrição dos componentes
 
 📁 /diagramas
-— Diagrama MQTT
+— Pseudocódigo do sistema
 — Fluxograma do sistema
-— Arquitetura geral
 
 📁 /resultados
 — Gráficos
 — Capturas de tela do MQTT Explorer
 — Tabela de testes
 
+📁 /documentação
+— Artigo final ABNT do projeto
+— Vídeo explicando o funcionamento e motivação do projeto
 🔗 Link do repositório GitHub:
-(insira aqui)
+https://github.com/Brendalacerdatav/Hissopo
 
 🧾 9. Conclusão
 
