@@ -1,0 +1,15 @@
+Componentes necessários:
+
+1x ESP32 DevKit V1  
+1x Sensor DHT22  
+1x Sensor MQ-135  
+1x Display LCD 16x2 I2C  
+1x LED vermelho  
+1x Buzzer ativo  
+1x Resistor 220Ω 
+1x Resistor de 10 kΩ 
+1x Resistor de 22 kΩ 
+1x Cabo USB → micro USB 
+1x Protoboard 
+10x Jumpers Macho-Macho
+10x Jumpers Macho-Fêmea 

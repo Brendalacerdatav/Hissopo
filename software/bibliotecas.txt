@@ -1,0 +1,8 @@
+Bibliotecas utilizadas no Projeto Hissopo:
+
+- WiFi.h (nativa do ESP32)
+- PubSubClient (MQTT)
+- DHT sensor library
+- Adafruit Unified Sensor
+- LiquidCrystal_I2C
+- Wire
