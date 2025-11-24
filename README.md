@@ -276,6 +276,10 @@ Time-lapse da montagem
 
 🔗 https://www.youtube.com/watch?v=_zuw_gWDAII
 
+Além disso o projeto conta com outro vídeo para demonstrar o uso do MQTT no projeto
+
+🔗 https://youtu.be/_P3IZFNX3_Q
+
 🗂 8. Repositório no GitHub
 
 O repositório contém:
